@@ -8,6 +8,8 @@ Created on Mon Aug 24 21:51:31 2015
 import os
 import pandas as pd
 
+from parser import init_page, init_table, bas_de_page
+
 
 path_doc = 'D:/data/code_cnaf/'
 
@@ -21,19 +23,6 @@ def code_to_wikitable(code):
     return text
 
 
-def init_page(title):
-    text = "{{-start-}} \n" + \
-            "'''" + title + "'''"
-
-    return text
-
-
-def init_table():
-    return """{| class=\"wikitable\"
-! scope=\"col\" | Code
-! scope=\"col\" | Label """
-
-
 def fill_model(row, filename):
     # TODO: dict to translate format into type
     text = """
@@ -43,10 +32,6 @@ def fill_model(row, filename):
 |type= """ + """
 |format= """ + "\n }}"
     return text
-
-
-def bas_de_page():
-    return 'Cette page a été initialement générée par un robot \n\n[[Category:CNAF]]\n{{-stop-}} \n \n'.decode('utf8')
 
 
 def generate_texts_pywikibot(feuille, filename, variables_a_garder=None):
