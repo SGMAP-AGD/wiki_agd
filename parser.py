@@ -20,3 +20,14 @@ def init_table():
 
 def bas_de_page():
     return 'Cette page a été initialement générée par un robot \n\n[[Category:CNAF]]\n{{-stop-}} \n \n'.decode('utf8')
+
+
+def create_model(name_model, **kwargs):
+    text_model = '{{' + name_model + '\n'
+    for param, value in kwargs.iteritems():
+        text_param = '|' + param + ' = ' + value + '\n'
+        text_model += text_param
+    text_model += '}}'
+    return text_model
+    
+    

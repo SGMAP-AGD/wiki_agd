@@ -8,7 +8,7 @@ Created on Mon Aug 24 21:51:31 2015
 import os
 import pandas as pd
 
-from parser import init_page, init_table, bas_de_page
+from parser import init_page, init_table, bas_de_page, create_model
 
 
 path_doc = 'D:/data/code_cnaf/'
@@ -32,6 +32,16 @@ def fill_model(row, filename):
 |type= """ + """
 |format= """ + "\n }}"
     return text
+
+def fill_model(row, filename):
+   create_model('Variable',
+                nom = row['nom_var_raccourci'], 
+                table = filename,
+                type = '',
+                format = '')
+    return text
+    
+
 
 
 def generate_texts_pywikibot(feuille, filename, variables_a_garder=None):
