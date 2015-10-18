@@ -8,7 +8,7 @@ Created on Mon Sep 21 22:39:43 2015
 import os
 import pandas as pd
 
-from wiki_agd.parser import init_page, init_table, bas_de_page
+from wiki_agd.parser import init_page, init_table, bas_de_page, create_model
 
 
 path_csv = 'M://data//Cartographie_des_donnees_logement_-_2015-01-26.csv'
@@ -21,15 +21,18 @@ def get_description(row):
     text = ''
 
     return text    
-    
 
-def modele_table(row):
-    text = '{{Variable \n |nom= ' + row['table'] + '\n |
-|nom= """ + row['nom_var_raccourci'] + """
-|table= """ + filename + """
-|type= """ + """
-|format= """ + "\n }}"
-    
+row = tab.iloc[0,:]
+
+text = create_model('Jeu de données',
+                    titre = row['table'],
+                    producteur = row['Origine des données'],
+                    gestionnaire = row['Gestionnaire'],
+                    freq_maj = row['Fréquence']
+                    )
+#TODO : to be continued
+
+print text
 
 def generate_texts_pywikibot(tab):
     ''' genere le fichier texte utilisé ensuite par pyikibot '''
