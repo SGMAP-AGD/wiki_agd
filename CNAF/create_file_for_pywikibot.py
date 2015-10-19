@@ -27,10 +27,11 @@ def fill_model(row, filename):
     # TODO: dict to translate format into type
     text = """
 {{Variable
-|nom= """ + row['nom_var_raccourci'] + """
-|table= """ + filename + """
-|type= """ + """
-|format= """ + "\n }}"
+| nom = """ + row['nom_var_raccourci'] + """
+| table = """ + filename + """
+| type = """ + convert_type[row['nature']] + \
+'\n| label = '.decode('utf8') +  row['Label'] + """
+| format = """ + "\n }}"
     return text
 
 def fill_model(row, filename):
@@ -110,6 +111,18 @@ if __name__ == '__main__':
         allenf = 'AGEN',
         alloheix = 'AGEN',
         allrsa = 'AGEN',
+        )
+
+    convert_type = dict(
+        CD = 'Variable à modalité'.decode('utf8'),
+        DT = 'Date',
+        HD = 'Date',
+        HR = 'Date',
+        Li = 'Texte libre',
+        NM = 'Numérique'.decode('utf8'),
+        QT = 'Numérique'.decode('utf8'),
+        MT = 'Numérique'.decode('utf8'),
+        RG = 'Numérique'.decode('utf8'),
         )
 
 #    for filename in ['wbcontac', 'glsdp010',
