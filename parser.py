@@ -18,8 +18,12 @@ def init_table():
 ! scope=\"col\" | Label """
 
 
-def bas_de_page():
-    return 'Cette page a été initialement générée par un robot \n\n[[Category:CNAF]]\n{{-stop-}} \n \n'.decode('utf8')
+def bas_de_page(category):
+    text = 'Cette page a été initialement générée par un robot \n\n'
+    if category != '':
+        text += '[[Category:' + category + ']]'
+    text += '\n{{-stop-}} \n \n'
+    return text.decode('utf8')
 
 
 def create_model(name_model, **kwargs):
@@ -29,19 +33,26 @@ def create_model(name_model, **kwargs):
         text_model += text_param
     text_model += '}}'
     return text_model
-    
-def create_model_from_table(model, table, name_varname, dic_model_parameter_by_var):
+
+
+def create_model_from_table(model, category, table, name_varname, _write_description,
+                            dic_model_parameter_by_var):
+    tab = table.fillna('')
     text_total = ''
-    for _, row in table.iloc[:,:5].iterrows():
-        text_row = init_page(row[name_varname])
+    for _, row in tab.iterrows():
+        text_row = init_page(row[name_varname]) + '\n\n'
         # dict for the row
-        dict_for_the_row= dict()       
+        dict_for_the_row = dict()
         for key, value in dic_model_parameter_by_var.iteritems():
             dict_for_the_row[key] = row[value]
-        text_row += create_model(model, **dict_for_the_row)
-        text_row += bas_de_page()
+
+        dict_for_the_row[u'thème'] = category
+        dict_for_the_row['description'] = _write_description(row)
+
+        text_row += create_model(model, **dict_for_the_row) + '\n\n'
+        text_row += bas_de_page(category)
         text_total += text_row
     return text_total
-        
-    
-    
+
+
+
